@@ -1,0 +1,15 @@
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\bin\Debug\Internet Speed Test.exe.config
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\bin\Debug\Internet Speed Test.exe
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\bin\Debug\Internet Speed Test.pdb
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.csprojAssemblyReference.cache
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\MainWindow.g.cs
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\App.g.cs
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test_MarkupCompile.cache
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test_MarkupCompile.lref
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\MainWindow.baml
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.g.resources
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet_Speed_Test.Properties.Resources.resources
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.csproj.GenerateResource.cache
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.csproj.CoreCompileInputs.cache
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.exe
+C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.pdb
