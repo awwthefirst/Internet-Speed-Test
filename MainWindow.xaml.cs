@@ -23,7 +23,7 @@ namespace Internet_Speed_Test
     {
 
         private bool isVisible = false;
-        //private int cooldown = 0;
+        private int cooldown = 0;
 
         public MainWindow()
         {
@@ -36,10 +36,11 @@ namespace Internet_Speed_Test
 
         private void CheckIfKeysPressed(Object source, ElapsedEventArgs e) //Maybe change keybinds
         {
-            //if (cooldown > 0)
-            //{
-            //    cooldown--;
-            //} else
+            if (cooldown > 0)
+            {
+                cooldown--;
+            }
+            else
             {
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
@@ -52,7 +53,7 @@ namespace Internet_Speed_Test
                         else
                             this.Show();
                         this.isVisible = !this.isVisible;
-                        //cooldown = 100;
+                        cooldown = 100;
                     }
                 });
             }
