@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Internet_Speed_Test"
         mc:Ignorable="d"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="0,2,0,-2">
+        <TextBlock HorizontalAlignment="Left" Margin="270,154,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="101" Width="402" FontSize="24"/>
+
     </Grid>
 </Window>
