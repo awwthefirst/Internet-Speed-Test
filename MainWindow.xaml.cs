@@ -53,7 +53,7 @@ namespace Internet_Speed_Test
                         else
                             this.Show();
                         this.isVisible = !this.isVisible;
-                        cooldown = 100;
+                        cooldown = 30;
                     }
                 });
             }
