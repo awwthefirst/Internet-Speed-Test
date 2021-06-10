@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:Internet_Speed_Test"
         mc:Ignorable="d"
         WindowStyle="None"
-        Background="Transparent"
+        Background="Transparent" 
         AllowsTransparency="True"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="0,2,0,-2">
-        <TextBlock HorizontalAlignment="Left" Margin="270,154,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="101" Width="402" FontSize="24"/>
+        WindowState="Maximized"
+        RenderOptions.BitmapScalingMode="HighQuality" 
+        Title="MainWindow" Height="1080" Width="1920"> 
+    <Grid Margin="0,2,0,-2" Width="1920" Height="1080"> 
+        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,10,0,0" Source="Images/component_background.png"/>
 
     </Grid>
 </Window>

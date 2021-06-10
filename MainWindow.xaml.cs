@@ -23,29 +23,27 @@ namespace Internet_Speed_Test
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int HOTKEY_ID = 9000;
-        private const byte MOD_NONE = 0x0000; //[NONE]
-        private const byte MOD_ALT = 0x0001; //ALT
-        private const byte MOD_CONTROL = 0x0002; //CTRL
-        private const byte MOD_SHIFT = 0x0004; //SHIFT
-        private const byte MOD_WIN = 0x0008; //WINDOWS
-                                             //CAPS LOCK:
-        private const byte VK_CAPITAL = 0x49;
+        private const int HOTKEY_ID = 9000; //Not sure why this is needed but it is
+        private const byte MOD_ALT = 0x0001; //Hex code for alt
+
+        private const byte VK_I = 0x49; //Hex code for I
+
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
         private HwndSource source;
 
-        private bool isVisible = false;
+        private bool isVisible = false; //Stores whether the overlay is currently visible
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        protected override void OnSourceInitialized(EventArgs e)
+        protected override void OnSourceInitialized(EventArgs e) //Registers a global hotkey for alt + i
         {
             base.OnSourceInitialized(e);
 
@@ -54,9 +52,10 @@ namespace Internet_Speed_Test
             source = HwndSource.FromHwnd(handle);
             source.AddHook(this.HwndHook);
 
-            RegisterHotKey(handle, HOTKEY_ID, MOD_ALT, VK_CAPITAL);
+            RegisterHotKey(handle, HOTKEY_ID, MOD_ALT, VK_I);
         }
 
+        //Checks if the HotKey is alt + i and then calls ToggleVisibility if it is
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             const short WM_HOTKEY = 0x0312;
@@ -67,7 +66,7 @@ namespace Internet_Speed_Test
                     {
                         case HOTKEY_ID:
                             int vkey = (((int)lParam >> 16) & 0xFFFF);
-                            if (vkey == VK_CAPITAL)
+                            if (vkey == VK_I)
                             {
                                 this.ToggleVisibility();
                             }
@@ -79,12 +78,13 @@ namespace Internet_Speed_Test
             return IntPtr.Zero;
         }
 
+        ///<summary>Toggles whether the overlay is visible.</summary>
         private void ToggleVisibility()
         {
-            if (!this.isVisible)
-                this.Show();
-            else
+            if (this.isVisible)
                 this.Hide();
+            else
+                this.Show();
             this.isVisible = !this.isVisible;
         }
     }
