@@ -1,4 +1,4 @@
-﻿<Window x:Class="Internet_Speed_Test.MainWindow"
+﻿  <Window x:Class="Internet_Speed_Test.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Internet_Speed_Test"
         mc:Ignorable="d"
         WindowStyle="None"
-        Background="Transparent" 
+        Background="Transparent"
+        RenderOptions.BitmapScalingMode="HighQuality"
         AllowsTransparency="True"
         WindowState="Maximized"
-        RenderOptions.BitmapScalingMode="HighQuality" 
-        Title="MainWindow" Height="1080" Width="1920"> 
-    <Grid Margin="0,2,0,-2" Width="1920" Height="1080"> 
-        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,10,0,0" Source="Images/component_background.png"/>
-
+        Title="MainWindow" Height="1080" Width="1920 ">
+    <Grid Margin="0,2,0,-2">
+        <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Source="Images/component_background.png"/>
+        <Label x:Name="PingText" Content="0ms&#xD;&#xA;" HorizontalAlignment="Left" Margin="44,46,0,0" VerticalAlignment="Top" Height="25"/>
     </Grid>
 </Window>
