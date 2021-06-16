@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Timers;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using Internet_Speed_Test.Scripts;
 
 namespace Internet_Speed_Test
 {
@@ -37,10 +38,12 @@ namespace Internet_Speed_Test
         private HwndSource source;
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
+        private VisibleComponent[] visibleComponents; 
 
         public MainWindow()
         {
             InitializeComponent();
+            visibleComponents = new VisibleComponent[] {new PingComponent()};
         }
 
         protected override void OnSourceInitialized(EventArgs e) //Registers a global hotkey for alt + i
@@ -81,10 +84,22 @@ namespace Internet_Speed_Test
         ///<summary>Toggles whether the overlay is visible.</summary>
         private void ToggleVisibility()
         {
-            if (this.isVisible)
+            if (!this.isVisible)
+            {
                 this.Hide();
+                foreach (VisibleComponent i in this.visibleComponents)
+                {
+                    i.OnSetHidden(this);
+                }
+            }
             else
+            {
                 this.Show();
+                foreach (VisibleComponent i in this.visibleComponents)
+                {
+                    i.OnSetVisible(this);
+                }
+            }
             this.isVisible = !this.isVisible;
         }
     }
