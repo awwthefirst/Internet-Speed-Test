@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -10,9 +8,21 @@ namespace Internet_Speed_Test.Scripts
     public class PingComponent : VisibleComponent
     {
 
+        private Thread currentThread;
+
         public override void OnSetVisible(MainWindow mainWindow)
         {
-            mainWindow.PingText.Content = this.TestPing().ToString() + "ms";
+            this.currentThread = new Thread(this.UpdatePing);
+            this.currentThread.Start(mainWindow);
+        }
+
+        private void UpdatePing(object param)
+        {
+            MainWindow mainWindow = (MainWindow)param;
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                mainWindow.PingText.Content = this.TestPing() + "ms";
+            });
         }
 
         private long TestPing()
@@ -35,7 +45,10 @@ namespace Internet_Speed_Test.Scripts
 
         public override void OnSetHidden(MainWindow mainWindow)
         {
-
+            if (this.currentThread != null)
+            {
+                this.currentThread.Abort();
+            }
         }
     }
 }

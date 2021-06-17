@@ -44,6 +44,7 @@ namespace Internet_Speed_Test
         {
             InitializeComponent();
             visibleComponents = new VisibleComponent[] {new PingComponent()};
+            this.OnSetVisible();
         }
 
         protected override void OnSourceInitialized(EventArgs e) //Registers a global hotkey for alt + i
@@ -87,20 +88,30 @@ namespace Internet_Speed_Test
             if (!this.isVisible)
             {
                 this.Hide();
-                foreach (VisibleComponent i in this.visibleComponents)
-                {
-                    i.OnSetHidden(this);
-                }
+                this.OnSetVisible();
             }
             else
             {
                 this.Show();
-                foreach (VisibleComponent i in this.visibleComponents)
-                {
-                    i.OnSetVisible(this);
-                }
+                this.OnSetHidden();
             }
             this.isVisible = !this.isVisible;
+        }
+
+        private void OnSetVisible()
+        {
+            foreach (VisibleComponent i in this.visibleComponents)
+            {
+                i.OnSetVisible(this);
+            }
+        }
+
+        private void OnSetHidden()
+        {
+            foreach (VisibleComponent i in this.visibleComponents)
+            {
+                i.OnSetHidden(this);
+            }
         }
     }
 }
