@@ -13,6 +13,6 @@
         Title="MainWindow" Height="1080" Width="1920 ">
     <Grid Margin="0,2,0,-2">
         <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Source="Images/component_background.png"/>
-        <Label x:Name="PingText" Content="0ms&#xD;&#xA;" HorizontalAlignment="Left" Margin="35,42,0,0" VerticalAlignment="Top" Height="34" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
     </Grid>
 </Window>

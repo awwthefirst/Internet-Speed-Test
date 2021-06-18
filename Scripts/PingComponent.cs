@@ -9,7 +9,6 @@ namespace Internet_Speed_Test.Scripts
     {
 
         private Thread currentThread;
-
         public override void OnSetVisible(MainWindow mainWindow)
         {
             this.currentThread = new Thread(this.UpdatePing);
@@ -18,11 +17,14 @@ namespace Internet_Speed_Test.Scripts
 
         private void UpdatePing(object param)
         {
-            MainWindow mainWindow = (MainWindow)param;
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            while (true)
             {
-                mainWindow.PingText.Content = this.TestPing() + "ms";
-            });
+                MainWindow mainWindow = (MainWindow)param;
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    mainWindow.PingText.Content = this.TestPing() + "ms";
+                });
+            }
         }
 
         private long TestPing()
