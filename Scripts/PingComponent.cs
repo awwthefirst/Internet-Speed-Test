@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Windows;
 using System.Net.NetworkInformation;
-using System.Threading;
+using System.Timers;
 
 namespace Internet_Speed_Test.Scripts
 {
     public class PingComponent : VisibleComponent
     {
-
-        private Thread currentThread;
+        private Timer currentTimer;
         public override void OnSetVisible(MainWindow mainWindow)
         {
-            this.currentThread = new Thread(this.UpdatePing);
-            this.currentThread.Start(mainWindow);
+            this.currentTimer = new Timer(2000);
+            this.currentTimer.Elapsed += (sender, e) => this.UpdatePing(sender, e, mainWindow);
+            this.currentTimer.Start();
         }
 
-        private void UpdatePing(object param)
+        private void UpdatePing(object source, ElapsedEventArgs e, MainWindow mainWindow)
         {
-            while (true)
+            Application.Current.Dispatcher.Invoke(delegate
             {
-                MainWindow mainWindow = (MainWindow)param;
-                Application.Current.Dispatcher.Invoke(delegate
-                {
-                    mainWindow.PingText.Content = this.TestPing() + "ms";
-                });
-            }
+                mainWindow.PingText.Content = this.TestPing() + "ms";
+            });
         }
 
         private long TestPing()
@@ -33,7 +29,7 @@ namespace Internet_Speed_Test.Scripts
             try
             {
                 Ping ping = new Ping();
-                PingReply reply = ping.Send("mc.hypixel.net");
+                PingReply reply = ping.Send("1.1.1.1");
                 result = reply.RoundtripTime;
                 if (!(reply.Status == IPStatus.Success))
                     result = -1;
@@ -47,9 +43,9 @@ namespace Internet_Speed_Test.Scripts
 
         public override void OnSetHidden(MainWindow mainWindow)
         {
-            if (this.currentThread != null)
+            if (this.currentTimer != null)
             {
-                this.currentThread.Abort();
+                this.currentTimer.Stop();
             }
         }
     }
