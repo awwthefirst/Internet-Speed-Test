@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Scripts\DownloadComponent.cs" />
     <Compile Include="Scripts\PingComponent.cs" />
     <Compile Include="Scripts\VisibleComponent.cs" />
     <Page Include="MainWindow.xaml">
