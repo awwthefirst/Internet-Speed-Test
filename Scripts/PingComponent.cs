@@ -28,18 +28,20 @@ namespace Internet_Speed_Test.Scripts
                     this.previousResults.Remove(0);
                 }
                 long result = this.TestPing();
+                Console.WriteLine(result);
 
                 if (result == -1)
                 {
                     mainWindow.PingText.Content = "Disconected";
-                }
+                } else
+                {
+                    this.previousResults.Add(result);
+                    long combinedResults = 0;
+                    this.previousResults.ForEach(l => { combinedResults += l; });
+                    long averageResult = combinedResults / this.previousResults.Count;
 
-                this.previousResults.Add(result);
-                long combinedResults = 0;
-                this.previousResults.ForEach(l => { combinedResults += l; } );
-                long averageResult = combinedResults / this.previousResults.Count;
-                
-                mainWindow.PingText.Content =  averageResult + "ms";
+                    mainWindow.PingText.Content = averageResult + "ms";
+                }
             });
         }
 
