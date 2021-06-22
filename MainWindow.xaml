@@ -1,4 +1,4 @@
-﻿  <Window x:Class="Internet_Speed_Test.MainWindow"
+﻿<Window x:Class="Internet_Speed_Test.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
         WindowState="Maximized"
         Title="MainWindow" Height="1080" Width="1920 ">
     <Grid Margin="0,2,0,-2">
-        <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Source="Images/component_background.png"/>
-        <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+        <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/component_background.png" Margin="10,10,0,0"/>
+        <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="16,41,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
     </Grid>
 </Window>
