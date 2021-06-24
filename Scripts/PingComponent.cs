@@ -2,53 +2,63 @@
 using System.Windows;
 using System.Net.NetworkInformation;
 using System.Threading;
+using System.Timers;
 
 namespace Internet_Speed_Test.Scripts
 {
     public class PingComponent : VisibleComponent
     {
-
-        private Thread currentThread;
+        
+        private static System.Timers.Timer aTimer;
+        private MainWindow mainWindow;
 
         public override void OnSetVisible(MainWindow mainWindow)
         {
-            this.currentThread = new Thread(this.UpdatePing);
-            this.currentThread.Start(mainWindow);
+            this.mainWindow = mainWindow;
+            aTimer = new System.Timers.Timer(1000);   
+            aTimer.Elapsed += Refresh;
+            aTimer.Start();
         }
-
-        private void UpdatePing(object param)
+        private void Refresh(object source, ElapsedEventArgs e)
         {
-            MainWindow mainWindow = (MainWindow)param;
-            Application.Current.Dispatcher.Invoke((Action)delegate
-            {
-                mainWindow.PingText.Content = this.TestPing() + "ms";
-            });
+            Application.Current.Dispatcher.Invoke(delegate
+           {
+               mainWindow.PingText.Content = TestPing("1.1.1.1") + "ms";
+           });
         }
-
-        private long TestPing()
+        private long TestPing(string address)
         {
-            long result;
+            bool pingable = false;
+            Ping pinger = null;
+            long result = -1;
+
             try
             {
-                Ping ping = new Ping();
-                PingReply reply = ping.Send("mc.hypixel.net");
-                result = reply.RoundtripTime;
-                if (!(reply.Status == IPStatus.Success))
-                    result = -1;
+                pinger = new Ping();
+                PingReply reply = pinger.Send(address);
+                pingable = reply.Status == IPStatus.Success;
+                if (pingable)
+                {
+                    result = reply.RoundtripTime;
+                }
+                
             }
             catch (PingException)
             {
-                result = -1;
+            }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
             }
             return result;
+            
         }
-
         public override void OnSetHidden(MainWindow mainWindow)
         {
-            if (this.currentThread != null)
-            {
-                this.currentThread.Abort();
-            }
+
         }
     }
 }

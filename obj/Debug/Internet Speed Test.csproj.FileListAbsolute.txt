@@ -13,3 +13,18 @@ C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\De
 C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.csproj.CoreCompileInputs.cache
 C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.exe
 C:\Users\thoma\OneDrive\Desktop\Code\Visual Studio\C#\Internet Speed Test\obj\Debug\Internet Speed Test.pdb
+C:\Users\sebpe\source\repos\Internet-Speed-Test\bin\Debug\Internet Speed Test.exe.config
+C:\Users\sebpe\source\repos\Internet-Speed-Test\bin\Debug\Internet Speed Test.exe
+C:\Users\sebpe\source\repos\Internet-Speed-Test\bin\Debug\Internet Speed Test.pdb
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.csprojAssemblyReference.cache
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\MainWindow.g.cs
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\App.g.cs
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test_MarkupCompile.cache
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test_MarkupCompile.lref
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\MainWindow.baml
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.g.resources
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet_Speed_Test.Properties.Resources.resources
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.csproj.GenerateResource.cache
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.csproj.CoreCompileInputs.cache
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.exe
+C:\Users\sebpe\source\repos\Internet-Speed-Test\obj\Debug\Internet Speed Test.pdb
