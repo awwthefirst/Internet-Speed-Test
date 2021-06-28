@@ -5,17 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Diagnostics;
+using System.Threading;
+using System.Windows;
 
 namespace Internet_Speed_Test.Scripts
 {
     class DownloadComponent : VisibleComponent
     {
+
         public override void OnSetVisible(MainWindow mainWindow)
         {
+            Thread thread = new Thread(this.DownloadSpeedTest);
+            thread.Start(mainWindow);
+        }
+
+        private void DownloadSpeedTest(object param)
+        {
+            MainWindow mainWindow = (MainWindow)param;
+
             double downloadSpeed = this.GetDownloadSpeed();
             double speedMBS = downloadSpeed / 1000000;
             double roundedSpeed = Math.Round(speedMBS, 2);
-            mainWindow.DownloadText.Content = $"{roundedSpeed} mbs";
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                mainWindow.DownloadText.Content = $"{roundedSpeed} mbs";
+            });
         }
 
         protected double GetDownloadSpeed()
