@@ -12,24 +12,10 @@ namespace Internet_Speed_Test.Scripts
     {
         public override void OnSetVisible(MainWindow mainWindow)
         {
-            mainWindow.DownloadText.Content = this.GetDownloadSpeed();
-        }
-
-        protected void CheckSpeed()
-        {
-            Stopwatch watch = new Stopwatch();
-
-            byte[] data;
-            using (WebClient client = new System.Net.WebClient())
-            {
-                watch.Start();
-                data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks);
-                watch.Stop();
-            }
-
-            var speed = data.LongLength / watch.Elapsed.TotalSeconds; // instead of [Seconds] property
-
-            Console.WriteLine("Speed: {0} bps ", speed.ToString("N0"));
+            double downloadSpeed = this.GetDownloadSpeed();
+            double speedMBS = downloadSpeed / 1000000;
+            double roundedSpeed = Math.Round(speedMBS, 2);
+            mainWindow.DownloadText.Content = $"{roundedSpeed} mbs";
         }
 
         protected double GetDownloadSpeed()
