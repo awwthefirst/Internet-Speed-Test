@@ -12,17 +12,15 @@ namespace Internet_Speed_Test.Scripts
     {
         public override void OnSetVisible(MainWindow mainWindow)
         {
-            this.CheckSpeed();
+            mainWindow.DownloadText.Content = this.GetDownloadSpeed();
         }
 
         protected void CheckSpeed()
         {
-            Console.WriteLine("Downloading file....");
-
-            var watch = new Stopwatch();
+            Stopwatch watch = new Stopwatch();
 
             byte[] data;
-            using (var client = new System.Net.WebClient())
+            using (WebClient client = new System.Net.WebClient())
             {
                 watch.Start();
                 data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks);
@@ -31,22 +29,27 @@ namespace Internet_Speed_Test.Scripts
 
             var speed = data.LongLength / watch.Elapsed.TotalSeconds; // instead of [Seconds] property
 
-            Console.WriteLine("Download duration: {0}", watch.Elapsed);
-            Console.WriteLine("File size: {0}", data.Length.ToString("N0"));
             Console.WriteLine("Speed: {0} bps ", speed.ToString("N0"));
+        }
+
+        protected double GetDownloadSpeed()
+        {
+            Stopwatch watch = new Stopwatch();
+
+            byte[] data;
+            using (WebClient client = new WebClient())
+            {
+                watch.Start();
+                data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks);
+                watch.Stop();
+            }
+            double speed = data.LongLength / watch.Elapsed.TotalSeconds;
+            return speed;
         }
 
         public override void OnSetHidden(MainWindow mainWindow)
         {
             //throw new NotImplementedException();
         }
-
-
-
-
-
-
-
-
     }
 }
