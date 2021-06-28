@@ -15,6 +15,7 @@ namespace Internet_Speed_Test.Scripts
 
         public override void OnSetVisible(MainWindow mainWindow)
         {
+            mainWindow.DownloadText.Content = "Loading";
             Thread thread = new Thread(this.DownloadSpeedTest);
             thread.Start(mainWindow);
         }
