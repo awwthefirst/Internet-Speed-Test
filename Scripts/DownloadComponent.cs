@@ -50,7 +50,7 @@ namespace Internet_Speed_Test.Scripts
 
         public override void OnSetHidden(MainWindow mainWindow)
         {
-            //throw new NotImplementedException();
+
         }
     }
 }
