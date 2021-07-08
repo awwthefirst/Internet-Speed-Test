@@ -7,16 +7,25 @@ using System.Net;
 using System.Diagnostics;
 using System.Windows;
 namespace Internet_Speed_Test.Scripts
-    
+
 {
     class DownloadComponent : VisibleComponent
     {
         public override void OnSetVisible(MainWindow mainWindow)
         {
             double downloadSpeed = DownloadSpeed();
-            String endResult = "";
-            mainWindow.DownloadText.Content = endResult;
+            double endResult = DownloadMath();
+            mainWindow.DownloadText.Content = endResult + "Mbs";
         }
+
+        private double DownloadMath()
+        {
+            double DownMbs = this.DownloadSpeed();
+            double Mbs = DownMbs / 1000000;
+            double roundedspeed = Math.Round(Mbs, 2);
+            return roundedspeed;
+        }
+        
 
         private double DownloadSpeed()
         {
