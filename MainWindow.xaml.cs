@@ -38,12 +38,12 @@ namespace Internet_Speed_Test
         private HwndSource source;
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
-        private VisibleComponent[] visibleComponents; 
+        private VisibleComponent[] visibleComponents;
 
         public MainWindow()
         {
             InitializeComponent();
-            visibleComponents = new VisibleComponent[] {new PingComponent()};
+            visibleComponents = new VisibleComponent[] {new PingComponent(), new DownloadComponent()};
             this.OnSetVisible();
         }
 
