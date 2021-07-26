@@ -16,9 +16,12 @@ using System.Timers;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using Internet_Speed_Test.Scripts;
+using System.IO;
+using System.Threading;
 
 namespace Internet_Speed_Test
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -38,7 +41,7 @@ namespace Internet_Speed_Test
         private HwndSource source;
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
-        private VisibleComponent[] visibleComponents; 
+        private VisibleComponent[] visibleComponents;
 
         public MainWindow()
         {
@@ -112,6 +115,25 @@ namespace Internet_Speed_Test
             {
                 i.OnSetHidden(this);
             }
+        }
+
+        private void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Thread thread = new Thread(() =>
+            {
+                ImageSource imageSource = null;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    imageSource = this.SettingsButtonImage.Source;
+                    this.SettingsButtonImage.Source = ((Image)FindResource("settings_button_click")).Source;
+                });
+                Thread.Sleep(100);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.SettingsButtonImage.Source = imageSource;
+                });
+            });
+            thread.Start();
         }
     }
 }

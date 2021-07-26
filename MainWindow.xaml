@@ -10,11 +10,47 @@
         RenderOptions.BitmapScalingMode="HighQuality"
         AllowsTransparency="True"
         WindowState="Maximized"
-        Title="MainWindow" Height="1080" Width="1920 ">
+        Title="MainWindow" Height="1080" Width="1920">
+    <Window.Resources>
+        <Image x:Key="settings_button_click" Source="settings_button_clicked.png"/>
+        <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Background="Transparent">
+                                <ContentPresenter></ContentPresenter>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid Margin="0,2,0,-2">
         <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/component_background.png" Margin="10,10,0,0"/>
         <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="16,41,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
         <Image x:Name="DownloadComponent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/component_background.png" Margin="10,121,0,0"/>
         <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="16,154,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+        <Button 
+            x:Name="SettingsButton"
+            HorizontalAlignment="Left"
+            Margin="10,230,0,0" VerticalAlignment="Top" Width="105" 
+            Height="105" 
+            Background="#00DDDDDD" 
+            BorderThickness="0" 
+            Click="ButtonClick"
+            Style="{StaticResource TransparentStyle}">
+            <Image x:Name="SettingsButtonImage" Width="100" Height="100" Source="Images/settings_button.png"/>
+        </Button>
     </Grid>
 </Window>
