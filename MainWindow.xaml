@@ -37,9 +37,22 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,2,0,-2">
-        <Image x:Name="PingComponent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/component_background.png" Margin="10,10,0,0"/>
+        <Image x:Name="PingComponent"
+               HorizontalAlignment="Left"
+               Height="100"
+               VerticalAlignment="Top"
+               Width="100"
+               Source="Images/component_background.png"
+               Margin="10,10,0,0" MouseDown="VisibleComponentClick"/>
         <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="16,41,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
-        <Image x:Name="DownloadComponent" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/component_background.png" Margin="10,121,0,0"/>
+        <Image x:Name="DownloadComponent"
+               HorizontalAlignment="Left"
+               Height="100"
+               VerticalAlignment="Top"
+               Width="100"
+               Source="Images/component_background.png"
+               Margin="10,121,0,0"
+               MouseDown="VisibleComponentClick"/>
         <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="16,154,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
         <Button 
             x:Name="SettingsButton"

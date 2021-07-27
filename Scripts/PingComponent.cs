@@ -10,6 +10,12 @@ namespace Internet_Speed_Test.Scripts
     {
         private Timer currentTimer; //A timer to call UpdatePing() once a second
         private List<long> previousResults; //Used for getting a average of results to smooth them out
+
+        public PingComponent(FrameworkElement component) : base(component)
+        {
+
+        }
+
         public override void OnSetVisible(MainWindow mainWindow)
         {
             this.previousResults = new List<long>();
@@ -72,6 +78,11 @@ namespace Internet_Speed_Test.Scripts
             {
                 this.currentTimer.Stop(); //Stops the timer
             }
+        }
+
+        public override void OnClick()
+        {
+
         }
     }
 }

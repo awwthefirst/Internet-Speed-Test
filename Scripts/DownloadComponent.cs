@@ -10,8 +10,12 @@ using System.Windows;
 
 namespace Internet_Speed_Test.Scripts
 {
-    class DownloadComponent : VisibleComponent
+    public class DownloadComponent : VisibleComponent
     {
+
+        public DownloadComponent(FrameworkElement component) : base(component)
+        {
+        }
 
         public override void OnSetVisible(MainWindow mainWindow)
         {
@@ -51,6 +55,11 @@ namespace Internet_Speed_Test.Scripts
         public override void OnSetHidden(MainWindow mainWindow)
         {
 
+        }
+
+        public override void OnClick()
+        {
+            
         }
     }
 }

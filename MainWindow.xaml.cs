@@ -42,11 +42,13 @@ namespace Internet_Speed_Test
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
         private VisibleComponent[] visibleComponents;
+        ///<summary>Is true if the program is in settings mode.</summary>
+        public bool SettingsMode = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            visibleComponents = new VisibleComponent[] {new PingComponent(), new DownloadComponent()};
+            visibleComponents = new VisibleComponent[] {new PingComponent(this.PingComponent), new DownloadComponent(this.DownloadComponent)};
             this.OnSetVisible();
         }
 
@@ -134,6 +136,19 @@ namespace Internet_Speed_Test
                 });
             });
             thread.Start();
+            SettingsMode = !SettingsMode;
+        }
+
+        private void VisibleComponentClick(object sender, MouseButtonEventArgs e)
+        {
+            string name = ((Image)e.Source).Name;
+            foreach (VisibleComponent v in this.visibleComponents)
+            {
+                if (v.Name == name)
+                {
+                    v.OnClick();
+                }
+            }
         }
     }
 }
