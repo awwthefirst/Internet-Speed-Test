@@ -56,10 +56,5 @@ namespace Internet_Speed_Test.Scripts
         {
 
         }
-
-        public override void OnClick()
-        {
-            
-        }
     }
 }
