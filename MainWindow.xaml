@@ -36,7 +36,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,2,0,-2">
+    <Grid Margin="0,2,0,-2" x:Name="Grid">
         <Image x:Name="PingComponent"
                HorizontalAlignment="Left"
                Height="100"

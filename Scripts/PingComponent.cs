@@ -79,10 +79,5 @@ namespace Internet_Speed_Test.Scripts
                 this.currentTimer.Stop(); //Stops the timer
             }
         }
-
-        public override void OnClick()
-        {
-
-        }
     }
 }

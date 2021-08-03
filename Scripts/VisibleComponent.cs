@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
@@ -24,9 +25,9 @@ namespace Internet_Speed_Test.Scripts
             this.name = component.Name;
         }
         ///<summary>Called when the ascociated <c>Image</c> is clicked.</summary>
-        public virtual void OnClick()
+        public virtual void OnClick(MainWindow mainWindow)
         {
-
+            
         }
     }
 }

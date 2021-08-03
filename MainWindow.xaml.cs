@@ -48,7 +48,7 @@ namespace Internet_Speed_Test
         public MainWindow()
         {
             InitializeComponent();
-            visibleComponents = new VisibleComponent[] {new PingComponent(this.PingComponent), new DownloadComponent(this.DownloadComponent)};
+            visibleComponents = new VisibleComponent[] {new PingComponent(this.PingComponent), new DownloadComponent(this.DownloadComponent) };
             this.OnSetVisible();
         }
 
@@ -146,7 +146,7 @@ namespace Internet_Speed_Test
             {
                 if (v.Name == name)
                 {
-                    v.OnClick();
+                    v.OnClick(this);
                 }
             }
         }
