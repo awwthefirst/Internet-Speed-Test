@@ -123,16 +123,15 @@ namespace Internet_Speed_Test
         {
             Thread thread = new Thread(() =>
             {
-                ImageSource imageSource = null;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    imageSource = this.SettingsButtonImage.Source;
-                    this.SettingsButtonImage.Source = ((Image)FindResource("settings_button_click")).Source;
-                });
-                Thread.Sleep(100);
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    this.SettingsButtonImage.Source = imageSource;
+                    if (SettingsMode)
+                    {
+                        this.SettingsButtonImage.Source = ((Image)FindResource("settings_button_click")).Source;
+                    } else
+                    {
+                        this.SettingsButtonImage.Source = ((Image)FindResource("settings_button")).Source;
+                    }
                 });
             });
             thread.Start();
@@ -144,7 +143,7 @@ namespace Internet_Speed_Test
             string name = ((Image)e.Source).Name;
             foreach (VisibleComponent v in this.visibleComponents)
             {
-                if (v.Name == name)
+                if (v.Component.Name == name)
                 {
                     v.OnClick(this);
                 }

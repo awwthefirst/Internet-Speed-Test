@@ -12,7 +12,14 @@
         WindowState="Maximized"
         Title="MainWindow" Height="1080" Width="1920">
     <Window.Resources>
+        <Image x:Key="settings_button" Source="Images/settings_button.png"/>
         <Image x:Key="settings_button_click" Source="settings_button_clicked.png"/>
+        <StackPanel x:Key="SettingsMenu" HorizontalAlignment="Left" Margin="207,110,0,0" VerticalAlignment="Top" Width="100">
+            <Button x:Name="ChangeColorButton" Content="Change Color"/>
+            <Button x:Name="ChangeFontButton" Content="Change Font"/>
+            <Button x:Name="MoveButton" Content="Move"/>
+            <Button x:Name="DisableButton" Content="Disable"/>
+        </StackPanel>
         <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -36,7 +43,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,2,0,-2" x:Name="Grid">
+    <Grid Margin="0,2,0,-2" x:Name="Grid">      
         <Image x:Name="PingComponent"
                HorizontalAlignment="Left"
                Height="100"
