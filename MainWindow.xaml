@@ -14,11 +14,11 @@
     <Window.Resources>
         <Image x:Key="settings_button" Source="Images/settings_button.png"/>
         <Image x:Key="settings_button_click" Source="settings_button_clicked.png"/>
-        <StackPanel x:Key="SettingsMenu" HorizontalAlignment="Left" Margin="207,110,0,0" VerticalAlignment="Top" Width="100">
-            <Button x:Name="ChangeColorButton" Content="Change Color"/>
-            <Button x:Name="ChangeFontButton" Content="Change Font"/>
-            <Button x:Name="MoveButton" Content="Move"/>
-            <Button x:Name="DisableButton" Content="Disable"/>
+        <StackPanel x:Key="SettingsMenu" HorizontalAlignment="Left" Margin="207,110,0,0" VerticalAlignment="Top" Width="150">
+            <Button x:Name="ChangeColorButton" Content="Change Color" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,2,2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
+            <Button x:Name="ChangeFontButton" Content="Change Font" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
+            <Button x:Name="MoveButton" Content="Move" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
+            <Button x:Name="DisableButton" Content="Disable" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1,2,2" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
         </StackPanel>
         <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">

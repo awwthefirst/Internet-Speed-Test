@@ -29,8 +29,11 @@ namespace Internet_Speed_Test.Scripts
             if (mainWindow.SettingsMode)
             {
                 StackPanel settingsMenu = (StackPanel)mainWindow.FindResource("SettingsMenu");
-                mainWindow.Grid.Children.Add(settingsMenu);
-                settingsMenu.Margin = new Thickness(component.Margin.Left + 100, component.Margin.Top + 15, component.Margin.Right, component.Margin.Bottom);
+                if (!mainWindow.Grid.Children.Contains(settingsMenu))
+                {
+                    mainWindow.Grid.Children.Add(settingsMenu);
+                }
+                settingsMenu.Margin = new Thickness(component.Margin.Left + 102, component.Margin.Top, component.Margin.Right, component.Margin.Bottom);
             }
         }
     }

@@ -136,6 +136,14 @@ namespace Internet_Speed_Test
             });
             thread.Start();
             SettingsMode = !SettingsMode;
+            if (!SettingsMode)
+            {
+                StackPanel settingsMenu = (StackPanel)this.FindResource("SettingsMenu");
+                if (this.Grid.Children.Contains(settingsMenu))
+                {
+                    this.Grid.Children.Remove(settingsMenu);
+                }
+            }
         }
 
         private void VisibleComponentClick(object sender, MouseButtonEventArgs e)
