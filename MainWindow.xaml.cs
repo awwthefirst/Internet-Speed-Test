@@ -37,19 +37,55 @@ namespace Internet_Speed_Test
 
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out Point pos);
 
         private HwndSource source;
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
         private VisibleComponent[] visibleComponents;
-        ///<summary>Is true if the program is in settings mode.</summary>
-        public bool SettingsMode = false;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+
+            public static implicit operator Point(POINT point)
+            {
+                return new Point(point.X, point.Y);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the cursor's position, in screen coordinates.
+        /// </summary>
+        /// <see>See MSDN documentation for further information.</see>
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
+
+        public static Point GetCursorPosition()
+        {
+            POINT lpPoint;
+            GetCursorPos(out lpPoint);
+            // NOTE: If you need error handling
+            // bool success = GetCursorPos(out lpPoint);
+            // if (!success)
+
+            return lpPoint;
+        }
 
         public MainWindow()
         {
             InitializeComponent();
-            visibleComponents = new VisibleComponent[] {new PingComponent(this.PingComponent), new DownloadComponent(this.DownloadComponent) };
+            visibleComponents = new VisibleComponent[] { new PingComponent(this.PingComponent, this.PingText), new DownloadComponent(this.DownloadComponent, this.DownloadText) };
             this.OnSetVisible();
+            Grid fontMenu = (Grid)this.FindResource("FontMenu");
+            ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
+            foreach (FontFamily i in System.Windows.Media.Fonts.SystemFontFamilies)
+            {
+                fontFamilies.Items.Add(i);
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e) //Registers a global hotkey for alt + i
@@ -119,43 +155,99 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
-        {
-            Thread thread = new Thread(() =>
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (SettingsMode)
-                    {
-                        this.SettingsButtonImage.Source = ((Image)FindResource("settings_button_click")).Source;
-                    } else
-                    {
-                        this.SettingsButtonImage.Source = ((Image)FindResource("settings_button")).Source;
-                    }
-                });
-            });
-            thread.Start();
-            SettingsMode = !SettingsMode;
-            if (!SettingsMode)
-            {
-                StackPanel settingsMenu = (StackPanel)this.FindResource("SettingsMenu");
-                if (this.Grid.Children.Contains(settingsMenu))
-                {
-                    this.Grid.Children.Remove(settingsMenu);
-                }
-            }
-        }
-
-        private void VisibleComponentClick(object sender, MouseButtonEventArgs e)
+        private void VisibleComponentLeftClick(object sender, MouseButtonEventArgs e)
         {
             string name = ((Image)e.Source).Name;
             foreach (VisibleComponent v in this.visibleComponents)
             {
                 if (v.Component.Name == name)
                 {
-                    v.OnClick(this);
+                    v.OnLeftClick(this);
                 }
             }
+        }
+
+        private void VisibleComponentRightClick(object sender, MouseButtonEventArgs e)
+        {
+            string name = ((Image)e.Source).Name;
+            foreach (VisibleComponent v in this.visibleComponents)
+            {
+                if (v.Component.Name == name)
+                {
+                    v.OnRightClick(this);
+                }
+            }
+        }
+
+        private void CloseSettingsMenu()
+        {
+            StackPanel settingMenu = (StackPanel)this.FindResource("SettingsMenu");
+            if (this.Grid.Children.Contains(settingMenu))
+            {
+                this.Grid.Children.Remove(settingMenu);
+            }
+        }
+
+        private void OpenFontMenu(object sender, RoutedEventArgs e)
+        {
+            this.CloseSettingsMenu();
+            Grid fontMenu = (Grid) this.FindResource("FontMenu");
+            this.Grid.Children.Add(fontMenu);
+            FrameworkElement component = VisibleComponent.CurrentComponent.Component;
+            fontMenu.Margin = new Thickness(component.Margin.Left + 102, component.Margin.Top, component.Margin.Right, component.Margin.Bottom);
+            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray();
+            Label label = VisibleComponent.CurrentComponent.Label;
+            Color color = ((SolidColorBrush)label.Foreground).Color;
+            inputs[0].Text = color.R.ToString();
+            inputs[1].Text = color.G.ToString();
+            inputs[2].Text = color.B.ToString();
+        }
+
+        private void ChangeFontColor(object sender, RoutedEventArgs e)
+        {
+            Grid fontMenu = (Grid)this.FindResource("FontMenu");
+            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray(); //Probably not a good way of doing it but it does work
+            Label errorLabel = fontMenu.Children.OfType<Label>().ToList().Find(i => i.Name == "ErrorLabel");
+            ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
+            try
+            {
+                byte r = byte.Parse(inputs[0].Text), g = byte.Parse(inputs[1].Text), b = byte.Parse(inputs[2].Text);
+                Label label = VisibleComponent.CurrentComponent.Label;
+                if (label != null)
+                {
+                    label.Foreground = new SolidColorBrush(Color.FromRgb(r, g, b));
+                    label.FontFamily = new FontFamily(fontFamilies.SelectedItem.ToString());
+                    errorLabel.Content = "";
+                }
+            } catch (Exception error) when (error is FormatException || error is OverflowException) {
+                errorLabel.Content = "Input must be a number between 0 and 255";
+            }
+        }
+
+        private void MoveComponent(object sender, RoutedEventArgs e)
+        {
+            this.CloseSettingsMenu();
+
+            FrameworkElement component = VisibleComponent.CurrentComponent.Component;
+            Label label = VisibleComponent.CurrentComponent.Label;
+            Thread thread = new Thread(() => {
+                while (true)
+                {
+                    MouseButtonState mouseButtonState = MouseButtonState.Released;
+                    Application.Current.Dispatcher.Invoke(delegate
+                    {
+                        Point point = GetCursorPosition();
+                        component.Margin = new Thickness(point.X - 50, point.Y - 50, 0, 0);
+                        label.Margin = new Thickness(point.X - 45, point.Y - 20, 0, 0);
+                        mouseButtonState = Mouse.LeftButton;
+                    });
+                    if (mouseButtonState == MouseButtonState.Pressed)
+                    {
+                        break;
+                    }
+                }
+            });
+            thread.Start();
         }
     }
 }

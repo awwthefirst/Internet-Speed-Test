@@ -16,10 +16,23 @@
         <Image x:Key="settings_button_click" Source="settings_button_clicked.png"/>
         <StackPanel x:Key="SettingsMenu" HorizontalAlignment="Left" Margin="207,110,0,0" VerticalAlignment="Top" Width="150">
             <Button x:Name="ChangeColorButton" Content="Change Color" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,2,2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
-            <Button x:Name="ChangeFontButton" Content="Change Font" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
-            <Button x:Name="MoveButton" Content="Move" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
+            <Button x:Name="ChangeFontButton" Content="Change Font" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased" Click="OpenFontMenu"/>
+            <Button x:Name="MoveButton" Content="Move" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased" Click="MoveComponent"/>
             <Button x:Name="DisableButton" Content="Disable" Background="#FF332288" Foreground="#FFDDCC77" BorderBrush="Black" BorderThickness="2,1,2,2" FontWeight="Bold" FontSize="16" RenderOptions.EdgeMode="Aliased"/>
         </StackPanel>
+        <Grid x:Key="FontMenu" HorizontalAlignment="Left" Height="100" Margin="142,10,0,0" VerticalAlignment="Top" Width="300" Background="#FF332288">
+            <Border BorderBrush="Black" BorderThickness="2"/>
+            <Label FontSize="20" Foreground="#FFDDCC77" Content="Color"/>
+            <Label FontSize="20" Foreground="#FFDDCC77" Content="R:" Margin="55,0,-59,0"/>
+            <TextBox Width="50" Height="20" Margin="78,10,172,70" RenderTransformOrigin="2.22,-0.5" x:Name="InputR"/>
+            <Label FontSize="20" Foreground="#FFDDCC77" Content="G:" Margin="130,0,-141,0" x:Name="InputG"/>
+            <TextBox Width="50" Height="20" Margin="156,10,94,70"/>
+            <Label FontSize="20" Foreground="#FFDDCC77" Content="B:" Margin="205,0,-221,0" x:Name="InputB"/>
+            <TextBox Width="50" Height="20" Margin="232,10,18,70"/>
+            <Button Content="Change Font" Margin="143,36,53,34" FontSize="16" Click="ChangeFontColor"/>
+            <Label FontSize="14" Foreground="Red" Margin="8,66,-8,-1" x:Name="ErrorLabel"/>
+            <ComboBox HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.471,-4.091"/>
+        </Grid>
         <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -43,34 +56,28 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,2,0,-2" x:Name="Grid">      
+    <Grid Margin="0,2,0,-2" x:Name="Grid">
         <Image x:Name="PingComponent"
                HorizontalAlignment="Left"
                Height="100"
                VerticalAlignment="Top"
                Width="100"
                Source="Images/component_background.png"
-               Margin="10,10,0,0" MouseDown="VisibleComponentClick"/>
-        <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="16,41,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+               Margin="10,10,0,0"
+               MouseRightButtonDown="VisibleComponentRightClick"
+               MouseLeftButtonDown="VisibleComponentLeftClick"/>
+        <Label x:Name="PingText" Content="Loading" HorizontalAlignment="Left" Margin="15,40,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
         <Image x:Name="DownloadComponent"
                HorizontalAlignment="Left"
                Height="100"
                VerticalAlignment="Top"
                Width="100"
                Source="Images/component_background.png"
-               Margin="10,121,0,0"
-               MouseDown="VisibleComponentClick"/>
-        <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="16,154,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
-        <Button 
-            x:Name="SettingsButton"
-            HorizontalAlignment="Left"
-            Margin="10,230,0,0" VerticalAlignment="Top" Width="105" 
-            Height="105" 
-            Background="#00DDDDDD" 
-            BorderThickness="0" 
-            Click="ButtonClick"
-            Style="{StaticResource TransparentStyle}">
-            <Image x:Name="SettingsButtonImage" Width="100" Height="100" Source="Images/settings_button.png"/>
-        </Button>
+               Margin="10,120,0,0"
+               MouseRightButtonDown="VisibleComponentRightClick"
+               MouseLeftButtonDown="VisibleComponentLeftClick"/>
+        <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="15,150,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1861,1054,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

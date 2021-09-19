@@ -3,6 +3,7 @@ using System.Windows;
 using System.Net.NetworkInformation;
 using System.Timers;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
@@ -11,7 +12,7 @@ namespace Internet_Speed_Test.Scripts
         private Timer currentTimer; //A timer to call UpdatePing() once a second
         private List<long> previousResults; //Used for getting a average of results to smooth them out
 
-        public PingComponent(FrameworkElement component) : base(component)
+        public PingComponent(FrameworkElement component, Label label) : base(component, label)
         {
 
         }
@@ -27,18 +28,21 @@ namespace Internet_Speed_Test.Scripts
 
         private void UpdatePing(object source, ElapsedEventArgs e, MainWindow mainWindow) //Called once a second by the currentTimer
         {
+            
+            if (this.previousResults.Count >= 3)
+            {
+                this.previousResults.Remove(0);
+            }
+            long result = this.TestPing();
+
             Application.Current.Dispatcher.Invoke(delegate
             {
-                if (this.previousResults.Count >= 3)
-                {
-                    this.previousResults.Remove(0);
-                }
-                long result = this.TestPing();
-
                 if (result == -1) //If you have no internet
                 {
                     mainWindow.PingText.Content = "Disconected";
-                } else
+                    mainWindow.PingText.FontSize = 12;
+                }
+                else
                 {
                     this.previousResults.Add(result);
                     long combinedResults = 0;
@@ -46,6 +50,7 @@ namespace Internet_Speed_Test.Scripts
                     long averageResult = combinedResults / this.previousResults.Count; //Average of the past 3 calls
 
                     mainWindow.PingText.Content = averageResult + "ms"; //Sets the label's text
+                    mainWindow.PingText.FontSize = 20;
                 }
             });
         }

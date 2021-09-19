@@ -7,13 +7,14 @@ using System.Net;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
     public class DownloadComponent : VisibleComponent
     {
 
-        public DownloadComponent(FrameworkElement component) : base(component)
+        public DownloadComponent(FrameworkElement component, Label label) : base(component, label)
         {
         }
 
@@ -28,12 +29,24 @@ namespace Internet_Speed_Test.Scripts
         {
             MainWindow mainWindow = (MainWindow)param;
 
-            double downloadSpeed = this.GetDownloadSpeed();
-            double speedMBS = downloadSpeed / 1000000;
-            double roundedSpeed = Math.Round(speedMBS, 2);
+            string content;
+            int fontSize;
+            try
+            {
+                double downloadSpeed = this.GetDownloadSpeed();
+                double speedMBS = downloadSpeed / 1000000;
+                double roundedSpeed = Math.Round(speedMBS, 2);
+                content = $"{roundedSpeed} mbs";
+                fontSize = 20;
+            } catch (WebException)
+            {
+                content = "Disconnected";
+                fontSize = 12;
+            }
             Application.Current.Dispatcher.Invoke(delegate
             {
-                mainWindow.DownloadText.Content = $"{roundedSpeed} mbs";
+                mainWindow.DownloadText.Content = content;
+                mainWindow.DownloadText.FontSize = fontSize;
             });
         }
 
