@@ -14,18 +14,18 @@ namespace Internet_Speed_Test.Scripts
     public class DownloadComponent : VisibleComponent
     {
 
-        public DownloadComponent(FrameworkElement component, Label label) : base(component, label)
+        public DownloadComponent(FrameworkElement component, Label label) : base(component, label) //Needed for the default constructor
         {
         }
 
         public override void OnSetVisible(MainWindow mainWindow)
         {
             mainWindow.DownloadText.Content = "Loading";
-            Thread thread = new Thread(this.DownloadSpeedTest);
+            Thread thread = new Thread(this.DownloadSpeedTest); //Runs the test in a new thread
             thread.Start(mainWindow);
         }
 
-        private void DownloadSpeedTest(object param)
+        private void DownloadSpeedTest(object param) //Runs the download test and updates the text
         {
             MainWindow mainWindow = (MainWindow)param;
 
@@ -34,22 +34,25 @@ namespace Internet_Speed_Test.Scripts
             try
             {
                 double downloadSpeed = this.GetDownloadSpeed();
-                double speedMBS = downloadSpeed / 1000000;
-                double roundedSpeed = Math.Round(speedMBS, 2);
-                content = $"{roundedSpeed} mbs";
-                fontSize = 20;
-            } catch (WebException)
+                double speedMBPS = downloadSpeed / 1000000; //Converts to mbps
+                double roundedSpeed = Math.Round(speedMBPS, 2);
+                content = $"{roundedSpeed} mbps"; //Formats the result
+                fontSize = 17;
+            }
+            catch (WebException) //Shows disconnected if the test fails
             {
-                content = "Disconnected";
+                content = "Disconnected"; 
                 fontSize = 12;
             }
             Application.Current.Dispatcher.Invoke(delegate
             {
-                mainWindow.DownloadText.Content = content;
+                mainWindow.DownloadText.Content = content; //Changes the text
                 mainWindow.DownloadText.FontSize = fontSize;
             });
         }
 
+        ///<summary>Returns the download speed in bytes.</summary>
+        ///<remarks>Can take several seconds to run.</remarks>
         protected double GetDownloadSpeed()
         {
             Stopwatch watch = new Stopwatch();
@@ -58,14 +61,14 @@ namespace Internet_Speed_Test.Scripts
             using (WebClient client = new WebClient())
             {
                 watch.Start();
-                data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks);
+                data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks); //Downloads the file
                 watch.Stop();
             }
             double speed = data.LongLength / watch.Elapsed.TotalSeconds;
             return speed;
         }
 
-        public override void OnSetHidden(MainWindow mainWindow)
+        public override void OnSetHidden(MainWindow mainWindow) //Neded for inheritence
         {
 
         }

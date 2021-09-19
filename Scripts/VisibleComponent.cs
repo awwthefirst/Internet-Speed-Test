@@ -54,7 +54,7 @@ namespace Internet_Speed_Test.Scripts
             CurrentComponent = this;
         }
 
-        private void ComponentRightClicked(object sender, ClickedEventArgs e)
+        private void ComponentRightClicked(object sender, ClickedEventArgs e) //Closes the settings menu if it is open
         {
             if (this.settingsActive)
             {
@@ -64,7 +64,7 @@ namespace Internet_Speed_Test.Scripts
             }
         }
 
-        public void OnLeftClick(MainWindow mainWindow)
+        public void OnLeftClick(MainWindow mainWindow) //Closes the settings menu and font menu if they are open
         {
             mainWindow.CloseSettingsMenu();
 

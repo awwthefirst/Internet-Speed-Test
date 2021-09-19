@@ -179,6 +179,7 @@ namespace Internet_Speed_Test
             }
         }
 
+        ///<summary>Closes the settings menu if it is open, otherwise does nothing.</summary>
         public void CloseSettingsMenu()
         {
             StackPanel settingMenu = (StackPanel)this.FindResource("SettingsMenu");
@@ -188,6 +189,7 @@ namespace Internet_Speed_Test
             }
         }
 
+        ///<summary>Closes the font menu if it is open, otherwise does nothing.</summary>
         public void CloseFontMenu()
         {
             Grid fontMenu = (Grid)this.FindResource("FontMenu");
@@ -197,7 +199,7 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void OpenFontMenu(object sender, RoutedEventArgs e)
+        private void OpenFontMenu(object sender, RoutedEventArgs e) //Opens the font menu and closes the settings menu
         {
             this.CloseSettingsMenu();
             Grid fontMenu = (Grid) this.FindResource("FontMenu");
@@ -212,10 +214,10 @@ namespace Internet_Speed_Test
             inputs[2].Text = color.B.ToString();
         }
 
-        private void ChangeFontColor(object sender, RoutedEventArgs e)
+        private void ChangeFontColor(object sender, RoutedEventArgs e) //Changes the font and color
         {
             Grid fontMenu = (Grid)this.FindResource("FontMenu");
-            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray(); //Probably not a good way of doing it but it does work
+            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray();
             Label errorLabel = fontMenu.Children.OfType<Label>().ToList().Find(i => i.Name == "ErrorLabel");
             ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
             try
@@ -231,12 +233,12 @@ namespace Internet_Speed_Test
                     }
                     errorLabel.Content = "";
                 }
-            } catch (Exception error) when (error is FormatException || error is OverflowException) {
+            } catch (Exception error) when (error is FormatException || error is OverflowException) { 
                 errorLabel.Content = "Input must be a number between 0 and 255";
             }
         }
 
-        private void MoveComponent(object sender, RoutedEventArgs e)
+        private void MoveComponent(object sender, RoutedEventArgs e) //Moves the component
         {
             this.CloseSettingsMenu();
 
@@ -262,7 +264,7 @@ namespace Internet_Speed_Test
             thread.Start();
         }
 
-        private void MoreInformation(object sender, RoutedEventArgs e)
+        private void MoreInformation(object sender, RoutedEventArgs e) //Toggles the information menu
         {
             Grid information = (Grid)this.FindResource("Information");
             if (this.Grid.Children.Contains(information))

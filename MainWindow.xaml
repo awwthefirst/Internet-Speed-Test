@@ -80,7 +80,7 @@
                Margin="10,120,0,0"
                MouseRightButtonDown="VisibleComponentRightClick"
                MouseLeftButtonDown="VisibleComponentLeftClick"/>
-        <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="15,150,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="DownloadText" Content="Loading" HorizontalAlignment="Left" Margin="15,150,0,0" VerticalAlignment="Top" Height="37" Foreground="#FFDDCC77" FontWeight="Bold" FontSize="17"/>
         <Button 
             x:Name="MoreInfoButton"
             HorizontalAlignment="Left"
