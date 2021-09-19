@@ -112,5 +112,8 @@
   <ItemGroup>
     <Resource Include="settings_button_clicked.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\information_button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

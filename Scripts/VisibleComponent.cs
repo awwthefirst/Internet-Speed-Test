@@ -42,13 +42,14 @@ namespace Internet_Speed_Test.Scripts
         ///<summary>Called when the ascociated <c>Image</c> is clicked.</summary>
         public virtual void OnRightClick(MainWindow mainWindow)
         {
+            mainWindow.CloseFontMenu();
             componentClicked?.Invoke(this, new ClickedEventArgs { MainWindow = mainWindow });
             StackPanel settingsMenu = (StackPanel) mainWindow.FindResource("SettingsMenu");
             if (!mainWindow.Grid.Children.Contains(settingsMenu))
             {
                 mainWindow.Grid.Children.Add(settingsMenu);
             }
-            settingsMenu.Margin = new Thickness(Component.Margin.Left + 102, Component.Margin.Top, Component.Margin.Right, Component.Margin.Bottom);
+            settingsMenu.Margin = new Thickness(Component.Margin.Left + 102, Component.Margin.Top + 20, Component.Margin.Right, Component.Margin.Bottom);
 
             CurrentComponent = this;
         }
@@ -65,11 +66,9 @@ namespace Internet_Speed_Test.Scripts
 
         public void OnLeftClick(MainWindow mainWindow)
         {
-            StackPanel settingMenu = (StackPanel)mainWindow.FindResource("SettingsMenu");
-            if (mainWindow.Grid.Children.Contains(settingMenu))
-            {
-                mainWindow.Grid.Children.Remove(settingMenu);
-            }
+            mainWindow.CloseSettingsMenu();
+
+            mainWindow.CloseFontMenu();
 
             CurrentComponent = null;
         }

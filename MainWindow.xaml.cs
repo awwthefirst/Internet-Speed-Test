@@ -82,7 +82,7 @@ namespace Internet_Speed_Test
             this.OnSetVisible();
             Grid fontMenu = (Grid)this.FindResource("FontMenu");
             ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
-            foreach (FontFamily i in System.Windows.Media.Fonts.SystemFontFamilies)
+            foreach (FontFamily i in Fonts.SystemFontFamilies)
             {
                 fontFamilies.Items.Add(i);
             }
@@ -179,12 +179,21 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void CloseSettingsMenu()
+        public void CloseSettingsMenu()
         {
             StackPanel settingMenu = (StackPanel)this.FindResource("SettingsMenu");
             if (this.Grid.Children.Contains(settingMenu))
             {
                 this.Grid.Children.Remove(settingMenu);
+            }
+        }
+
+        public void CloseFontMenu()
+        {
+            Grid fontMenu = (Grid)this.FindResource("FontMenu");
+            if (this.Grid.Children.Contains(fontMenu))
+            {
+                this.Grid.Children.Remove(fontMenu);
             }
         }
 
@@ -216,7 +225,10 @@ namespace Internet_Speed_Test
                 if (label != null)
                 {
                     label.Foreground = new SolidColorBrush(Color.FromRgb(r, g, b));
-                    label.FontFamily = new FontFamily(fontFamilies.SelectedItem.ToString());
+                    if (fontFamilies.SelectedItem != null)
+                    {
+                        label.FontFamily = new FontFamily(fontFamilies.SelectedItem.ToString());
+                    }
                     errorLabel.Content = "";
                 }
             } catch (Exception error) when (error is FormatException || error is OverflowException) {
@@ -248,6 +260,18 @@ namespace Internet_Speed_Test
                 }
             });
             thread.Start();
+        }
+
+        private void MoreInformation(object sender, RoutedEventArgs e)
+        {
+            Grid information = (Grid)this.FindResource("Information");
+            if (this.Grid.Children.Contains(information))
+            {
+                this.Grid.Children.Remove(information);
+            } else
+            {
+                this.Grid.Children.Add(information);
+            }
         }
     }
 }
