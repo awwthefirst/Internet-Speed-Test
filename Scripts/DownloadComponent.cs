@@ -11,6 +11,7 @@ using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
+    ///<summary>This class shows your current download speed.</summary>
     public class DownloadComponent : VisibleComponent
     {
 
@@ -55,7 +56,7 @@ namespace Internet_Speed_Test.Scripts
         ///<remarks>Can take several seconds to run.</remarks>
         protected double GetDownloadSpeed()
         {
-            Stopwatch watch = new Stopwatch();
+            Stopwatch watch = new Stopwatch(); //Stopwatch to time how long the download takes
 
             byte[] data;
             using (WebClient client = new WebClient())
@@ -64,7 +65,7 @@ namespace Internet_Speed_Test.Scripts
                 data = client.DownloadData("http://dl.google.com/googletalk/googletalk-setup.exe?t=" + DateTime.Now.Ticks); //Downloads the file
                 watch.Stop();
             }
-            double speed = data.LongLength / watch.Elapsed.TotalSeconds;
+            double speed = data.LongLength / watch.Elapsed.TotalSeconds; //Divides the size of the data downloaded by the time taken to get the speed
             return speed;
         }
 

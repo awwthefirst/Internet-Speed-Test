@@ -27,24 +27,23 @@ namespace Internet_Speed_Test
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int HOTKEY_ID = 9000; //Not sure why this is needed but it is
+        private const int HOTKEY_ID = 9000;
         private const byte MOD_ALT = 0x0001; //Hex code for alt
 
         private const byte VK_I = 0x49; //Hex code for I
 
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk); //Needed for adding the alt + i hotkey
 
         [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out Point pos);
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id); //Needed for adding the alt + i hotkey
 
         private HwndSource source;
 
         private bool isVisible = false; //Stores whether the overlay is currently visible
         private VisibleComponent[] visibleComponents;
 
+        ///<summary>Needed for GetCursorPosition()</summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
@@ -60,7 +59,6 @@ namespace Internet_Speed_Test
         /// <summary>
         /// Retrieves the cursor's position, in screen coordinates.
         /// </summary>
-        /// <see>See MSDN documentation for further information.</see>
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out POINT lpPoint);
 
@@ -68,9 +66,6 @@ namespace Internet_Speed_Test
         {
             POINT lpPoint;
             GetCursorPos(out lpPoint);
-            // NOTE: If you need error handling
-            // bool success = GetCursorPos(out lpPoint);
-            // if (!success)
 
             return lpPoint;
         }
@@ -78,9 +73,12 @@ namespace Internet_Speed_Test
         public MainWindow()
         {
             InitializeComponent();
-            visibleComponents = new VisibleComponent[] { new PingComponent(this.PingComponent, this.PingText), new DownloadComponent(this.DownloadComponent, this.DownloadText) };
+
+            visibleComponents = new VisibleComponent[] { new PingComponent(this.PingComponent, this.PingText), new DownloadComponent(this.DownloadComponent, this.DownloadText) }; //Sets up the visible components
+
             this.OnSetVisible();
-            Grid fontMenu = (Grid)this.FindResource("FontMenu");
+
+            Grid fontMenu = (Grid)this.FindResource("FontMenu"); //Sets up the font menu to have options for all the different font families
             ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
             foreach (FontFamily i in Fonts.SystemFontFamilies)
             {
@@ -139,7 +137,7 @@ namespace Internet_Speed_Test
             this.isVisible = !this.isVisible;
         }
 
-        private void OnSetVisible()
+        private void OnSetVisible() //Calls on set visible on the visible components
         {
             foreach (VisibleComponent i in this.visibleComponents)
             {
@@ -147,7 +145,7 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void OnSetHidden()
+        private void OnSetHidden() //Calls on set hidden on the visible components
         {
             foreach (VisibleComponent i in this.visibleComponents)
             {
@@ -155,7 +153,7 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void VisibleComponentLeftClick(object sender, MouseButtonEventArgs e)
+        private void VisibleComponentLeftClick(object sender, MouseButtonEventArgs e) //Called when a visible component is clicked and calls OnLeftClick on that visible component
         {
             string name = ((Image)e.Source).Name;
             foreach (VisibleComponent v in this.visibleComponents)
@@ -167,7 +165,7 @@ namespace Internet_Speed_Test
             }
         }
 
-        private void VisibleComponentRightClick(object sender, MouseButtonEventArgs e)
+        private void VisibleComponentRightClick(object sender, MouseButtonEventArgs e) //Called when a visible component is right clicked and calls OnRightClick on that visible component
         {
             string name = ((Image)e.Source).Name;
             foreach (VisibleComponent v in this.visibleComponents)
@@ -202,14 +200,18 @@ namespace Internet_Speed_Test
         private void OpenFontMenu(object sender, RoutedEventArgs e) //Opens the font menu and closes the settings menu
         {
             this.CloseSettingsMenu();
-            Grid fontMenu = (Grid) this.FindResource("FontMenu");
+
+            Grid fontMenu = (Grid) this.FindResource("FontMenu"); //Displays the font menu
             this.Grid.Children.Add(fontMenu);
+
             FrameworkElement component = VisibleComponent.CurrentComponent.Component;
-            fontMenu.Margin = new Thickness(component.Margin.Left + 102, component.Margin.Top, component.Margin.Right, component.Margin.Bottom);
-            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray();
+            fontMenu.Margin = new Thickness(component.Margin.Left + 102, component.Margin.Top, component.Margin.Right, component.Margin.Bottom); //Positions the font menu
+
+            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray(); //Gets the inputs
             Label label = VisibleComponent.CurrentComponent.Label;
-            Color color = ((SolidColorBrush)label.Foreground).Color;
-            inputs[0].Text = color.R.ToString();
+            Color color = ((SolidColorBrush)label.Foreground).Color; //Gets the current color
+
+            inputs[0].Text = color.R.ToString(); //Sets the input values to the current color
             inputs[1].Text = color.G.ToString();
             inputs[2].Text = color.B.ToString();
         }
@@ -217,23 +219,25 @@ namespace Internet_Speed_Test
         private void ChangeFontColor(object sender, RoutedEventArgs e) //Changes the font and color
         {
             Grid fontMenu = (Grid)this.FindResource("FontMenu");
-            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray();
-            Label errorLabel = fontMenu.Children.OfType<Label>().ToList().Find(i => i.Name == "ErrorLabel");
-            ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First();
+
+            TextBox[] inputs = fontMenu.Children.OfType<TextBox>().ToArray(); //Finds the textboxs with the color inputs
+            Label errorLabel = fontMenu.Children.OfType<Label>().ToList().Find(i => i.Name == "ErrorLabel"); //Finds the error label
+            ComboBox fontFamilies = fontMenu.Children.OfType<ComboBox>().First(); //Finds the combobox with the font families
+
             try
             {
-                byte r = byte.Parse(inputs[0].Text), g = byte.Parse(inputs[1].Text), b = byte.Parse(inputs[2].Text);
+                byte r = byte.Parse(inputs[0].Text), g = byte.Parse(inputs[1].Text), b = byte.Parse(inputs[2].Text); //Gets entered color
                 Label label = VisibleComponent.CurrentComponent.Label;
                 if (label != null)
                 {
-                    label.Foreground = new SolidColorBrush(Color.FromRgb(r, g, b));
+                    label.Foreground = new SolidColorBrush(Color.FromRgb(r, g, b)); //Sets the color
                     if (fontFamilies.SelectedItem != null)
                     {
-                        label.FontFamily = new FontFamily(fontFamilies.SelectedItem.ToString());
+                        label.FontFamily = new FontFamily(fontFamilies.SelectedItem.ToString()); //Sets the font family
                     }
-                    errorLabel.Content = "";
+                    errorLabel.Content = ""; //Clears the error message
                 }
-            } catch (Exception error) when (error is FormatException || error is OverflowException) { 
+            } catch (Exception error) when (error is FormatException || error is OverflowException) { //Displays a error if the wrong input was entered
                 errorLabel.Content = "Input must be a number between 0 and 255";
             }
         }
@@ -244,18 +248,18 @@ namespace Internet_Speed_Test
 
             FrameworkElement component = VisibleComponent.CurrentComponent.Component;
             Label label = VisibleComponent.CurrentComponent.Label;
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() => { //Runs it in a new thread
                 while (true)
                 {
                     MouseButtonState mouseButtonState = MouseButtonState.Released;
                     Application.Current.Dispatcher.Invoke(delegate
                     {
-                        Point point = GetCursorPosition();
-                        component.Margin = new Thickness(point.X - 50, point.Y - 50, 0, 0);
+                        Point point = GetCursorPosition(); 
+                        component.Margin = new Thickness(point.X - 50, point.Y - 50, 0, 0); //Sets the components position
                         label.Margin = new Thickness(point.X - 45, point.Y - 20, 0, 0);
                         mouseButtonState = Mouse.LeftButton;
                     });
-                    if (mouseButtonState == MouseButtonState.Pressed)
+                    if (mouseButtonState == MouseButtonState.Pressed) //Breaks out of the loop if the mouse is clicked
                     {
                         break;
                     }

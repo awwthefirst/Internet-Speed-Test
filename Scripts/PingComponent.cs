@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
+    ///<summary>This class shows your current ping.</summary>
     public class PingComponent : VisibleComponent
     {
         private Timer currentTimer; //A timer to call UpdatePing() once a second
@@ -21,7 +22,7 @@ namespace Internet_Speed_Test.Scripts
         {
             this.previousResults = new List<long>();
 
-            this.currentTimer = new Timer(1000); //Setups the timer
+            this.currentTimer = new Timer(1000); //Setups the timer to run every second
             this.currentTimer.Elapsed += (sender, e) => this.UpdatePing(sender, e, mainWindow);
             this.currentTimer.Start();
         }
@@ -29,15 +30,16 @@ namespace Internet_Speed_Test.Scripts
         private void UpdatePing(object source, ElapsedEventArgs e, MainWindow mainWindow) //Called once a second by the currentTimer
         {
             
-            if (this.previousResults.Count >= 3)
+            if (this.previousResults.Count >= 3) //Makes sure there is always 3 results in previosResults
             {
                 this.previousResults.Remove(0);
             }
+
             long result = this.TestPing();
 
             Application.Current.Dispatcher.Invoke(delegate
             {
-                if (result == -1) //If you have no internet
+                if (result == -1) //If you have no internet displays disconnected
                 {
                     mainWindow.PingText.Content = "Disconected";
                     mainWindow.PingText.FontSize = 12;
@@ -49,7 +51,7 @@ namespace Internet_Speed_Test.Scripts
                     this.previousResults.ForEach(l => { combinedResults += l; });
                     long averageResult = combinedResults / this.previousResults.Count; //Average of the past 3 calls
 
-                    mainWindow.PingText.Content = averageResult + "ms"; //Sets the label's text
+                    mainWindow.PingText.Content = averageResult + "ms"; //Sets the label's text to the average
                     mainWindow.PingText.FontSize = 20;
                 }
             });
@@ -65,12 +67,12 @@ namespace Internet_Speed_Test.Scripts
                 Ping ping = new Ping();
                 PingReply reply = ping.Send("1.1.1.1");
                 result = reply.RoundtripTime;
-                if (reply.Status != IPStatus.Success)
+                if (reply.Status != IPStatus.Success) //If the ping was not a success
                 {
                     result = -1;
                 }
             }
-            catch (PingException)
+            catch (PingException) //Is thrown when you have no internet
             {
                 result = -1;
             }

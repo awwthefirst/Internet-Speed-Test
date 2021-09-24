@@ -8,6 +8,7 @@ using System.Windows.Controls;
 
 namespace Internet_Speed_Test.Scripts
 {
+    ///<summary>The base class for ping component and download component</summary>
     public abstract class VisibleComponent
     {
         ///<summary>Called by <c>MainWindow</c> when the window is set visible.</summary>
@@ -43,13 +44,16 @@ namespace Internet_Speed_Test.Scripts
         public virtual void OnRightClick(MainWindow mainWindow)
         {
             mainWindow.CloseFontMenu();
-            componentClicked?.Invoke(this, new ClickedEventArgs { MainWindow = mainWindow });
-            StackPanel settingsMenu = (StackPanel) mainWindow.FindResource("SettingsMenu");
+
+            componentClicked?.Invoke(this, new ClickedEventArgs { MainWindow = mainWindow }); //Invokes the componentClicked event
+
+            StackPanel settingsMenu = (StackPanel) mainWindow.FindResource("SettingsMenu"); //Finds settingsMenu
+
             if (!mainWindow.Grid.Children.Contains(settingsMenu))
             {
                 mainWindow.Grid.Children.Add(settingsMenu);
             }
-            settingsMenu.Margin = new Thickness(Component.Margin.Left + 102, Component.Margin.Top + 20, Component.Margin.Right, Component.Margin.Bottom);
+            settingsMenu.Margin = new Thickness(Component.Margin.Left + 102, Component.Margin.Top + 20, Component.Margin.Right, Component.Margin.Bottom); //Positions the settings menu
 
             CurrentComponent = this;
         }
